@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "echo-artistry"
+version = "0.0.1"
+description = "EchoArtistry is an innovative tool that transforms spoken words into captivating visual stories and summaries."
+authors = ["Jurik-001"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.9"
+pytest = "^7.4.4"
+notebook = "^7.0.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

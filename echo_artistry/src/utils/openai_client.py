@@ -5,6 +5,7 @@ from PIL import Image
 from io import BytesIO
 
 MODEL_NAME = "gpt-3.5-turbo-1106"
+IMAGE_MODEL_NAME = "dall-e-2"
 
 
 class OpenAIError(Exception):
@@ -12,12 +13,13 @@ class OpenAIError(Exception):
 
     pass
 
-
+# TODO Getting error message for tokenlimit from openai, use it
 class OpenAIClient:
     """OpenAI API client."""
 
     def __init__(self, model_name=MODEL_NAME):
         self.model_name = model_name
+        self.image_model_name = IMAGE_MODEL_NAME
         self.client = OpenAI()
 
     def generate_answer(self, messages):
@@ -53,7 +55,7 @@ class OpenAIClient:
         """
         try:
             response = self.client.images.generate(
-                model="dall-e-2",
+                model=self.image_model_name,
                 prompt=prompt,
                 size="512x512",
                 quality="standard",

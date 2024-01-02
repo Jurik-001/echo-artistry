@@ -74,12 +74,18 @@ class SceneDescriptionGenerator:
         return modified_text
 
     def refine_image_description(self, text):
-        refined_image_prompt = [
+        refined_image_conversation = [
             {"role": "system", "content": f"You are an artist."
                                           "Rewrite and enrich the scene description using only keywords and short phrases. The result should be so descreptive that an artist can paint an image based on."},
             {"role": "user", "content": f"DESCRIPTION: {text}"},
         ]
-        return self.client.generate_answer(refined_image_prompt)
+        for _ in range(MAX_RETRIES):
+            refined_image_prompt = self.client.generate_answer(refined_image_conversation)
+            if len(refined_image_prompt) < utils.IMAGE_CHARACTER_LENGTH_MAPPING[self.client.image_model_name]["character_length"]:
+                return refined_image_prompt
+            else:
+                refined_image_conversation.append({"role": "assistant", "content": refined_image_prompt})
+                refined_image_conversation.append({"role": "user", "content": f"Keep your message shorter."})
 
     def generate_description(self, text):
         scene_number = self.retrieve_scene_number(text)

@@ -31,6 +31,18 @@ MODEL_TOKEN_LENGTH_MAPPING = {
     },
 }
 
+IMAGE_CHARACTER_LENGTH_MAPPING = {
+    "dall-e-2": {
+        "character_length": 1000,
+        "cost_per_image": {
+            "1024×1024": 0.020,
+            "512x512": 0.018,
+            "256x256": 0.016,
+
+        }
+    }
+}
+
 DEFAULT_MODEL_NAME = "gpt-3.5-turbo-1106"
 
 

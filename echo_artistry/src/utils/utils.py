@@ -4,9 +4,8 @@ import logging
 
 import tiktoken
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s",
-)
+logging.basicConfig(filename='echo_artistry.log', level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger()
 
 MODEL_TOKEN_LENGTH_MAPPING = {
     "gpt-3.5-turbo-1106": {

@@ -3,6 +3,7 @@ import re
 from echo_artistry.src import utils
 
 MAX_RETRIES = 5
+IMAGE_STYLE = "Style: Stylized, Digital Illustration, Luminous, Enchanting, Child-friendly, Warm Palette, Whimsical, Expressive Features, Soft Textures\n"
 
 class SceneDescriptionGenerator:
     def __init__(self):
@@ -87,7 +88,7 @@ class SceneDescriptionGenerator:
                 refined_image_conversation.append({"role": "assistant", "content": refined_image_prompt})
                 refined_image_conversation.append({"role": "user", "content": f"Keep your message shorter."})
 
-    def generate_description(self, text):
+    def generate_description(self, text, image_style=IMAGE_STYLE):
         scene_number = self.retrieve_scene_number(text)
 
         scene_description = self.retrieve_scene_description(text, scene_number)
@@ -95,6 +96,6 @@ class SceneDescriptionGenerator:
         scenes = self.cut_into_scenes(scene_description)
 
         for i in range(len(scenes)):
+            scenes[i] = self.insert_text_after_scene_title(scenes[i], i + 1, image_style)
             scenes[i] = self.refine_image_description(scenes[i])
-
         return scenes

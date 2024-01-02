@@ -3,9 +3,11 @@ from openai import OpenAI
 import requests
 from PIL import Image
 from io import BytesIO
+from echo_artistry.src import utils
 
 MODEL_NAME = "gpt-3.5-turbo-1106"
 IMAGE_MODEL_NAME = "dall-e-2"
+
 
 
 class OpenAIError(Exception):
@@ -36,6 +38,7 @@ class OpenAIClient:
                 model=self.model_name,
                 messages=messages,
             )
+            utils.logger.debug(f'Messages: {messages} Response: {response.choices[0].message.content}')
             return response.choices[0].message.content
         except Exception as e:
             raise OpenAIError(f"An unexpected error occurred: {e}") from e
@@ -65,5 +68,3 @@ class OpenAIClient:
             raise OpenAIError(f"An unexpected error occurred: {e}") from e
 
         return self.retrieve_image_from_url(response.data[0].url)
-
-

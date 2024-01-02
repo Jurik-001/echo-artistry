@@ -1,16 +1,35 @@
+import re
+
 from echo_artistry.src import utils
+
+MAX_RETRIES = 5
 
 class SceneDescriptionGenerator:
     def __init__(self):
         self.client = utils.OpenAIClient()
 
+    def extract_number(self, text):
+        """
+        This function takes a text and extracts the first number in it.
+        """
+        number = re.findall(r"\d+", text)[0]
+        return int(number)
+
     def retrieve_scene_number(self, text):
-        mg = [
-            {"role": "system",
-             "content": f"The given text should be transformed into a movie, how many scenes can be created based on that. Name ONLY a number between 1 and 10."},
-            {"role": "user", "content": f"TEXT: {text}"},
-        ]
-        return self.client.generate_answer(mg)
+        conversation = []
+        conversation.append({"role": "system",
+             "content": f"The given text should be transformed into a movie, "
+                        f"how many scenes can be created based on that. "
+                        f"Name ONLY a number between 1 and 10."})
+        conversation.append({"role": "user", "content": f"TEXT: {text}"})
+
+        for _ in range(MAX_RETRIES):
+            response = self.client.generate_answer(conversation)
+            try:
+                return self.extract_number(response)
+            except IndexError:
+                conversation.append({"role": "assistant", "content": response})
+                conversation.append({"role": "user", "content": f"Your answer is wrong, please try again."})
 
     def retrieve_scene_description(self, text, scene_number):
         mg = [

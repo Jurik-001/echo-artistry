@@ -4,16 +4,11 @@ import requests
 from PIL import Image
 from io import BytesIO
 from echo_artistry.src import utils
+from echo_artistry import exceptions
 
 MODEL_NAME = "gpt-3.5-turbo-1106"
 IMAGE_MODEL_NAME = "dall-e-2"
 
-
-
-class OpenAIError(Exception):
-    """General error in OpenAI Client."""
-
-    pass
 
 # TODO Getting error message for tokenlimit from openai, use it
 class OpenAIClient:
@@ -41,7 +36,7 @@ class OpenAIClient:
             utils.logger.debug(f'Messages: {messages} Response: {response.choices[0].message.content}')
             return response.choices[0].message.content
         except Exception as e:
-            raise OpenAIError(f"An unexpected error occurred: {e}") from e
+            raise exceptions.OpenAIError(f"An unexpected error occurred: {e}") from e
 
     def retrieve_image_from_url(self, url):
         response = requests.get(url)
@@ -65,6 +60,6 @@ class OpenAIClient:
                 n=1,
             )
         except Exception as e:
-            raise OpenAIError(f"An unexpected error occurred: {e}") from e
+            raise exceptions.OpenAIError(f"An unexpected error occurred: {e}") from e
 
         return self.retrieve_image_from_url(response.data[0].url)

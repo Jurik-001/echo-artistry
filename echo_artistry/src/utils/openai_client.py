@@ -4,7 +4,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 from echo_artistry.src import utils
-from echo_artistry import exceptions
+from echo_artistry.src import exceptions
 
 MODEL_NAME = "gpt-3.5-turbo-1106"
 IMAGE_MODEL_NAME = "dall-e-2"
@@ -60,6 +60,10 @@ class OpenAIClient:
                 n=1,
             )
         except Exception as e:
-            raise exceptions.OpenAIError(f"An unexpected error occurred: {e}") from e
+            if "content_policy_violation" in str(e):
+                raise exceptions.ContentPolicyViolation(
+                    "The given text contains content which violates the OpenAI content policy.")
+            else:
+                raise exceptions.OpenAIError(f"An unexpected error occurred: {e}") from e
 
         return self.retrieve_image_from_url(response.data[0].url)

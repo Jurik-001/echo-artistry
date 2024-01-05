@@ -7,7 +7,8 @@ from echo_artistry.src import utils
 from echo_artistry.src import exceptions
 
 MODEL_NAME = "gpt-3.5-turbo-1106"
-IMAGE_MODEL_NAME = "dall-e-2"
+IMAGE_MODEL_NAME = "dall-e-3"
+DEFAULT_IMAGE_SIZE = "1792x1024"
 
 
 # TODO Getting error message for tokenlimit from openai, use it
@@ -55,7 +56,7 @@ class OpenAIClient:
             response = self.client.images.generate(
                 model=self.image_model_name,
                 prompt=prompt,
-                size="512x512",
+                size=DEFAULT_IMAGE_SIZE,
                 quality="standard",
                 n=1,
             )

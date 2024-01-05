@@ -37,9 +37,12 @@ IMAGE_CHARACTER_LENGTH_MAPPING = {
             "1024×1024": 0.020,
             "512x512": 0.018,
             "256x256": 0.016,
-
         }
+    },
+    "dall-e-3": {
+        "character_length": 4000,
     }
+
 }
 
 DEFAULT_MODEL_NAME = "gpt-3.5-turbo-1106"

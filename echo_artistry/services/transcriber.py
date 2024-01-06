@@ -5,7 +5,7 @@ from pathlib import Path
 
 import whisper
 
-from echo_artistry.src import utils
+from echo_artistry import utils
 
 
 class Transcriber:

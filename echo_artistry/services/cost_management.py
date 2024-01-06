@@ -1,6 +1,6 @@
 """This module is used to calculate the cost of a text."""
 
-from echo_artistry.src import utils
+from echo_artistry.utils import helper
 
 
 class CostManager:
@@ -10,20 +10,23 @@ class CostManager:
 
     def __init__(
         self,
-        model_name=utils.DEFAULT_MODEL_NAME,
-        image_model_name=utils.DEFAULT_IMAGE_MODEL_NAME,
-        image_quality=utils.DEFAULT_IMAGE_QUALITY,
+        token_counter,
+        model_name=helper.DEFAULT_MODEL_NAME,
+        image_model_name=helper.DEFAULT_IMAGE_MODEL_NAME,
+        image_quality=helper.DEFAULT_IMAGE_QUALITY,
+        image_size=helper.DEFAULT_IMAGE_SIZE,
     ):
+        self.token_counter = token_counter
         self.model_name = model_name
         self.image_model_name = image_model_name
         self.image_quality = image_quality
-        self.input_token_cost = utils.MODEL_TOKEN_LENGTH_MAPPING[model_name][
+        self.image_size = image_size
+        self.input_token_cost = helper.MODEL_TOKEN_LENGTH_MAPPING[model_name][
             "input_token_cost"
         ]
-        self.output_token_cost = utils.MODEL_TOKEN_LENGTH_MAPPING[model_name][
+        self.output_token_cost = helper.MODEL_TOKEN_LENGTH_MAPPING[model_name][
             "output_token_cost"
         ]
-        self.token_counter = utils.TokenCounter(self.model_name)
         self.per_n_tokens = 1000
 
     def calculate_cost_token(self, token_count, is_input=True):
@@ -91,7 +94,7 @@ class CostManager:
         """
         image_size = image.size
         image_size_string = f"{image_size[0]}x{image_size[1]}"
-        cost = utils.IMAGE_CHARACTER_LENGTH_MAPPING[self.image_model_name][
+        cost = helper.IMAGE_CHARACTER_LENGTH_MAPPING[self.image_model_name][
             "cost_per_image"
         ][self.image_quality][image_size_string]
         self.total_cost += cost

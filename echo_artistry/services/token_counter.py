@@ -1,6 +1,6 @@
 import tiktoken
 
-from echo_artistry.src import utils
+from echo_artistry import utils
 
 
 class TokenCounter:

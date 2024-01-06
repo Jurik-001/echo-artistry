@@ -5,10 +5,13 @@ import os
 
 from tqdm import tqdm
 
-from echo_artistry.src import utils
-from echo_artistry.src.comic_image_generator import ComicImageGenerator
-from echo_artistry.src.comic_story_generator import ComicStoryGenerator
-from echo_artistry.src.transcriber import Transcriber
+from echo_artistry.generators import (
+    ComicImageGenerator,
+    ComicStoryGenerator,
+    FileNameGenerator,
+)
+from echo_artistry.services import CostManager, TokenCounter, Transcriber
+from echo_artistry.utils import OpenAIClient, helper
 
 
 def args_call():
@@ -22,7 +25,7 @@ def args_call():
         help="The path to the audio file.",
     )
     parser.add_argument(
-        "output_dir",
+        "output_path",
         type=str,
         help="The directory to save the summary file.",
     )
@@ -38,25 +41,28 @@ def args_call():
         help="The model name used as blog generator.",
     )
     args = parser.parse_args()
-    main(args.audio_path, args.output_dir, args.api_key, args.model_name)
+    main(args.audio_path, args.output_path, args.api_key, args.model_name)
 
 
-def main(audio_path, output_dir, api_key, model_name):
+def main(audio_path, output_path, api_key, model_name):
     """Download, transcribe, and generate comics from a voice memo.
 
     Args:
     ----
         audio_path (str): The path to the audio file.
-        output_dir (str): The directory to save the summary file.
+        output_path (str): The directory to save the summary file.
         api_key (str): The API key for openai API.
         model_name (str): The model name used as blog generator.
     """
     os.environ["OPENAI_API_KEY"] = api_key
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
-    transcriber = Transcriber(output_path=output_dir)
-    file_name_generator = utils.FileNameGenerator()
-    comic_story_generator = ComicStoryGenerator(model_name, output_dir)
-    comic_image_generator = ComicImageGenerator(output_path=output_dir)
+    token_counter = TokenCounter(model_name=model_name)
+    cost_manager = CostManager(token_counter, model_name=model_name)
+    client = OpenAIClient(cost_manager, model_name=model_name)
+    transcriber = Transcriber(output_path=output_path)
+    file_name_generator = FileNameGenerator(client)
+    comic_story_generator = ComicStoryGenerator(client, output_path=output_path)
+    comic_image_generator = ComicImageGenerator(client, output_path=output_path)
 
     tasks = [
         "Transcribing audio",
@@ -80,8 +86,8 @@ def main(audio_path, output_dir, api_key, model_name):
         comic_image_generator.generate_image(comic_story, file_name=comic_image_file_name)
         pbar.update(1)
 
-        total_cost = utils.OpenAIClient.cost_manager.get_total_cost()
-        utils.logging.info(f"Comic is generated.\nTotal cost: {total_cost} USD")
+        total_cost = OpenAIClient.cost_manager.get_total_cost()
+        helper.logging.info(f"Comic is generated.\nTotal cost: {total_cost} USD")
 
 
 if __name__ == "__main__":

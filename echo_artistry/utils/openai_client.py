@@ -5,7 +5,8 @@ import requests
 from openai import OpenAI
 from PIL import Image
 
-from echo_artistry.src import exceptions, utils
+from echo_artistry import exceptions
+from echo_artistry.utils import helper
 
 
 class OpenAIClient:
@@ -13,24 +14,23 @@ class OpenAIClient:
 
     def __init__(
         self,
-        model_name=utils.DEFAULT_MODEL_NAME,
-        image_model_name=utils.DEFAULT_IMAGE_MODEL_NAME,
-        image_size=utils.DEFAULT_IMAGE_SIZE,
-        image_quality=utils.DEFAULT_IMAGE_QUALITY,
+        cost_manager,
+        model_name=helper.DEFAULT_MODEL_NAME,
+        image_model_name=helper.DEFAULT_IMAGE_MODEL_NAME,
+        image_size=helper.DEFAULT_IMAGE_SIZE,
+        image_quality=helper.DEFAULT_IMAGE_QUALITY,
     ):
+        self.cost_manager = cost_manager
         self.model_name = model_name
         self.image_model_name = image_model_name
         self.image_size = image_size
         self.image_quality = image_quality
         self.client = OpenAI()
-        self.cost_manager = utils.CostManager(
-            self.model_name, self.image_model_name, self.image_quality,
-        )
 
-    def calculate_cost(self, messages, is_input=True, is_image=False):
-        if is_image:
-            self.cost_manager.calculate_cost_image(messages)
-        else:
+    def calculate_cost(self, messages=None, image=None, is_input=True):
+        if image:
+            self.cost_manager.calculate_cost_image(image)
+        if messages:
             self.cost_manager.calculate_cost_messages(messages, is_input=is_input)
 
     def generate_answer(self, messages):
@@ -44,20 +44,22 @@ class OpenAIClient:
         -------
             str: Generated answer.
         """
-        self.calculate_cost(messages, is_input=True, is_image=False)
+        self.calculate_cost(messages=messages, is_input=True)
         try:
             response = self.client.chat.completions.create(
                 model=self.model_name,
                 messages=messages,
             )
-            utils.logger.debug(
+            helper.logger.debug(
                 f"Messages: {messages} Response: {response.choices[0].message.content}",
             )
-            result = response.choices[0].message.content
-            self.calculate_cost(messages, is_input=False, is_image=False)
-            return result
+            result_text = response.choices[0].message.content
         except Exception as e:
             raise exceptions.OpenAIError(f"An unexpected error occurred: {e}") from e
+
+        result_message = [{"role": "assistant", "content": result_text}]
+        self.calculate_cost(messages=result_message, is_input=False)
+        return result_text
 
     def retrieve_image_from_url(self, url):
         response = requests.get(url)
@@ -74,7 +76,6 @@ class OpenAIClient:
         -------
             str: Generated image.
         """
-        self.calculate_cost(prompt, is_input=True, is_image=True)
         try:
             response = self.client.images.generate(
                 model=self.image_model_name,
@@ -90,5 +91,6 @@ class OpenAIClient:
                 )
             else:
                 raise exceptions.OpenAIError(f"An unexpected error occurred: {e}") from e
-
-        return self.retrieve_image_from_url(response.data[0].url)
+        image = self.retrieve_image_from_url(response.data[0].url)
+        self.calculate_cost(image=image, is_input=True)
+        return image

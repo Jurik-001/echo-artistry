@@ -1,7 +1,7 @@
 import os
 from enum import Enum
 
-from echo_artistry.src import utils
+from echo_artistry import utils
 
 MAX_RETRIES = 5
 MAX_FILE_NAME_LENGTH = 15
@@ -20,12 +20,12 @@ class CompositeOption(Enum):
 class ComicStoryGenerator:
     def __init__(
         self,
-        model_name=utils.DEFAULT_MODEL_NAME,
+        client,
         output_path="comic_stories",
         max_retries=MAX_RETRIES,
         store_comic_story=True,
     ):
-        self.client = utils.OpenAIClient(model_name=model_name)
+        self.client = client
         self.max_retries = max_retries
         self.output_path = output_path
         self.store_comic_stories = store_comic_story

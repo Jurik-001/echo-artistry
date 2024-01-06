@@ -9,12 +9,15 @@ class CostManager:
     Attributes:
         model_name (str): The name of the model to use.
     """
+
     def __init__(self, model_name):
         self.model_name = model_name
-        self.input_token_cost = \
-            utils.MODEL_TOKEN_LENGTH_MAPPING[model_name]["input_token_cost"]
-        self.output_token_cost = \
-            utils.MODEL_TOKEN_LENGTH_MAPPING[model_name]["output_token_cost"]
+        self.input_token_cost = utils.MODEL_TOKEN_LENGTH_MAPPING[model_name][
+            "input_token_cost"
+        ]
+        self.output_token_cost = utils.MODEL_TOKEN_LENGTH_MAPPING[model_name][
+            "output_token_cost"
+        ]
         self.token_counter = utils.TokenCounter(self.model_name)
         self.total_cost = 0
         self.per_n_tokens = 1000

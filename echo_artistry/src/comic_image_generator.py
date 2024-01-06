@@ -6,7 +6,12 @@ MAX_RETRIES = 5
 
 
 class ComicImageGenerator:
-    def __init__(self, model_name=utils.DEFAULT_IMAGE_MODEL_NAME, output_path="comic_images", store_comic_images=True):
+    def __init__(
+        self,
+        model_name=utils.DEFAULT_IMAGE_MODEL_NAME,
+        output_path="comic_images",
+        store_comic_images=True,
+    ):
         self.client = utils.OpenAIClient(image_model_name=model_name)
         self.output_path = output_path
         self.store_comic_images = store_comic_images

@@ -10,7 +10,12 @@ from echo_artistry.src import exceptions
 class OpenAIClient:
     """OpenAI API client."""
 
-    def __init__(self, model_name=utils.DEFAULT_MODEL_NAME, image_model_name=utils.DEFAULT_IMAGE_MODEL_NAME, image_size=utils.DEFAULT_IMAGE_SIZE):
+    def __init__(
+        self,
+        model_name=utils.DEFAULT_MODEL_NAME,
+        image_model_name=utils.DEFAULT_IMAGE_MODEL_NAME,
+        image_size=utils.DEFAULT_IMAGE_SIZE,
+    ):
         self.model_name = model_name
         self.image_model_name = image_model_name
         self.image_size = image_size
@@ -30,7 +35,9 @@ class OpenAIClient:
                 model=self.model_name,
                 messages=messages,
             )
-            utils.logger.debug(f'Messages: {messages} Response: {response.choices[0].message.content}')
+            utils.logger.debug(
+                f"Messages: {messages} Response: {response.choices[0].message.content}"
+            )
             return response.choices[0].message.content
         except Exception as e:
             raise exceptions.OpenAIError(f"An unexpected error occurred: {e}") from e
@@ -59,7 +66,8 @@ class OpenAIClient:
         except Exception as e:
             if "content_policy_violation" in str(e):
                 raise exceptions.ContentPolicyViolation(
-                    "The given text contains content which violates the OpenAI content policy.")
+                    "The given text contains content which violates the OpenAI content policy."
+                )
             else:
                 raise exceptions.OpenAIError(f"An unexpected error occurred: {e}") from e
 

@@ -7,7 +7,9 @@ class TokenCounter:
 
     def __init__(self, model_name=utils.DEFAULT_MODEL_NAME):
         self.encoding = tiktoken.encoding_for_model(model_name)
-        self.model_token_length = utils.MODEL_TOKEN_LENGTH_MAPPING[model_name]["token_length"]
+        self.model_token_length = utils.MODEL_TOKEN_LENGTH_MAPPING[model_name][
+            "token_length"
+        ]
 
     def count_tokens(self, text):
         """Count the number of tokens in a text.

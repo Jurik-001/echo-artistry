@@ -4,7 +4,11 @@ import logging
 
 import tiktoken
 
-logging.basicConfig(filename='echo_artistry.log', level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    filename="echo_artistry.log",
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
 logger = logging.getLogger()
 
 MODEL_TOKEN_LENGTH_MAPPING = {
@@ -37,7 +41,7 @@ IMAGE_CHARACTER_LENGTH_MAPPING = {
             "1024×1024": 0.020,
             "512x512": 0.018,
             "256x256": 0.016,
-        }
+        },
     },
     "dall-e-3": {
         "character_length": 4000,
@@ -51,10 +55,9 @@ IMAGE_CHARACTER_LENGTH_MAPPING = {
                 "1024×1024": 0.080,
                 "1024×1792": 0.120,
                 "1792×1024": 0.120,
-            }
-        }
-    }
-
+            },
+        },
+    },
 }
 
 DEFAULT_MODEL_NAME = "gpt-3.5-turbo-1106"
@@ -86,5 +89,3 @@ def get_text_from_file(file_path):
     with open(file_path, "r") as file:
         text = file.read()
     return text
-
-

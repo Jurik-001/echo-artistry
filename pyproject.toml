@@ -16,6 +16,10 @@ pillow = "^10.1.0"
 ruff = "^0.1.9"
 pytest = "^7.4.4"
 notebook = "^7.0.6"
+black = "^23.12.1"
+
+[tool.black]
+line-length = 90
 
 [build-system]
 requires = ["poetry-core"]

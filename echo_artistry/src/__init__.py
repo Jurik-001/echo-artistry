@@ -8,11 +8,12 @@ from .comic_story_generator import CompositeOption
 from .comic_story_generator import ComicStoryGenerator
 from .comic_image_generator import ComicImageGenerator
 
-__all__ = ["Transcriber",
-           "exceptions",
-           "utils",
-           "CostManager",
-           "CompositeOption",
-           "ComicStoryGenerator",
-            "ComicImageGenerator"
-           ]
+__all__ = [
+    "Transcriber",
+    "exceptions",
+    "utils",
+    "CostManager",
+    "CompositeOption",
+    "ComicStoryGenerator",
+    "ComicImageGenerator",
+]

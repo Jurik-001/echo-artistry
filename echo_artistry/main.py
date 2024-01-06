@@ -17,7 +17,7 @@ def args_call():
     parser = argparse.ArgumentParser(
         description="Generate stunning art stories based on your voice message.",
     )
-    #TODO decide if it is cooler to have  it as argument or as input
+    # TODO decide if it is cooler to have  it as argument or as input
     parser.add_argument(
         "audio_path",
         type=str,
@@ -28,10 +28,11 @@ def args_call():
         type=str,
         help="The directory to save the summary file.",
     )
-    parser.add_argument("api_key",
-                        type=str,
-                        help="The API key for openai API.",
-                        )
+    parser.add_argument(
+        "api_key",
+        type=str,
+        help="The API key for openai API.",
+    )
     parser.add_argument(
         "--model_name",
         type=str,
@@ -40,6 +41,7 @@ def args_call():
     )
     args = parser.parse_args()
     main(args.audio_path, args.output_dir, args.api_key, args.model_name)
+
 
 def main(audio_path, output_dir, api_key, model_name):
     """Download, transcribe, and generate comics from a voice memo.
@@ -58,25 +60,26 @@ def main(audio_path, output_dir, api_key, model_name):
     comic_story_generator = ComicStoryGenerator(model_name)
     comic_image_generator = ComicImageGenerator(output_path=output_dir)
 
-    tasks = ["Transcribing audio", "Generate file name", "Generating comic story", "Generating comic"]
+    tasks = [
+        "Transcribing audio",
+        "Generate file name",
+        "Generating comic story",
+        "Generating comic",
+    ]
 
     with tqdm(total=len(tasks)) as pbar:
-
         transcription = transcriber.transcribe_audio(audio_path)
         pbar.update(1)
         file_name = file_name_generator.generate_file_name(transcription)
         pbar.update(1)
         comic_file_name = f"{file_name}.txt"
-        comic_story = comic_story_generator.generate_story(transcription, file_name=comic_file_name)
+        comic_story = comic_story_generator.generate_story(
+            transcription, file_name=comic_file_name
+        )
         pbar.update(1)
         comic_image_file_name = f"{file_name}.png"
         comic_image_generator.generate_image(comic_story, file_name=comic_image_file_name)
         pbar.update(1)
-
-
-
-
-
 
 
 if __name__ == "__main__":

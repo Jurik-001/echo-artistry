@@ -19,7 +19,10 @@ class FileNameGenerator:
 
     def generate_file_name(self, text):
         msg = [
-            {"role": "system", "content": f"The following text is in a txt file create a file name, that will match following regex: ^[a-z0-9_\-]+$ and is max {MAX_FILE_NAME_LENGTH} char long."},
+            {
+                "role": "system",
+                "content": f"The following text is in a txt file create a file name, that will match following regex: ^[a-z0-9_\-]+$ and is max {MAX_FILE_NAME_LENGTH} char long. \n provide only the name.",
+            },
             {"role": "user", "content": f"TEXT: {text}"},
         ]
         for _ in range(self.max_retries):
@@ -28,7 +31,11 @@ class FileNameGenerator:
                 return file_name
             else:
                 msg.append({"role": "assistant", "content": file_name})
-                msg.append({"role": "user", "content": f"The filename does not meet the requirements."})
+                msg.append(
+                    {
+                        "role": "user",
+                        "content": f"The filename does not meet the requirements.",
+                    }
+                )
 
         raise Exception("Max retries exceeded.")
-

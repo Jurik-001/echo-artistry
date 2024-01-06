@@ -15,9 +15,9 @@ DEFAULT_IMAGE_SIZE = "1792x1024"
 class OpenAIClient:
     """OpenAI API client."""
 
-    def __init__(self, model_name=MODEL_NAME):
+    def __init__(self, model_name=MODEL_NAME, image_model_name=IMAGE_MODEL_NAME):
         self.model_name = model_name
-        self.image_model_name = IMAGE_MODEL_NAME
+        self.image_model_name = image_model_name
         self.client = OpenAI()
 
     def generate_answer(self, messages):

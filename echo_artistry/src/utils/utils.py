@@ -48,44 +48,29 @@ IMAGE_CHARACTER_LENGTH_MAPPING = {
 DEFAULT_MODEL_NAME = "gpt-3.5-turbo-1106"
 
 
-def save_to_md_file(content, file_path):
-    """Save content to a markdown file.
+def write_text_to_file(text, file_path):
+    """Write text to a file.
 
     Args:
-        content (str): The content to save.
-        file_path (str): The path to the file to save to.
-
-    Returns:
-        str: The path to the saved file.
+        text (str): The text to write.
+        file_path (str): The path to the file.
     """
-    with open(file_path, "w") as f:
-        f.write(content)
-    logging.info(f"Blog post saved to: {file_path}")
-    return file_path
+    with open(file_path, "w") as file:
+        file.write(text)
 
 
-def format_to_markdown(text):
-    """Format text to markdown.
+def get_text_from_file(file_path):
+    """Get the text from a file.
 
     Args:
-        text (str): The text to format.
+        file_path (str): The path to the file.
 
     Returns:
-        str: The formatted text.
+        str: The text from the file.
     """
-    lines = text.split("\\n")
-
-    formatted_lines = []
-
-    for line in lines:
-        if line.startswith("#"):
-            if formatted_lines:
-                formatted_lines.append("")
-        formatted_lines.append(line)
-
-    formatted_text = "\n".join(formatted_lines)
-
-    return formatted_text
+    with open(file_path, "r") as file:
+        text = file.read()
+    return text
 
 
 class TokenCounter:

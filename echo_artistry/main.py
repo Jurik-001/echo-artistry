@@ -7,12 +7,20 @@ from tqdm import tqdm
 
 from echo_artistry.src import utils
 from echo_artistry.src.transcriber import Transcriber
+from echo_artistry.src.comic_story_generator import ComicStoryGenerator
+from echo_artistry.src.cost_management import CostManager
 
 
 def args_call():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
         description="Generate stunning art stories based on your voice message.",
+    )
+    #TODO decide if it is cooler to have  it as argument or as input
+    parser.add_argument(
+        "audio_path",
+        type=str,
+        help="The path to the audio file.",
     )
     parser.add_argument(
         "output_dir",
@@ -30,30 +38,34 @@ def args_call():
         help="The model name used as blog generator.",
     )
     args = parser.parse_args()
-    main(args.output_dir, args.api_key, args.model_name)
+    main(args.audio_path, args.output_dir, args.api_key, args.model_name)
 
-def main(output_dir, api_key, model_name):
-    """Download, transcribe, and generate blog post of a YouTube video.
+def main(audio_path, output_dir, api_key, model_name):
+    """Download, transcribe, and generate comics from a voice memo.
 
     Args:
+        audio_path (str): The path to the audio file.
         output_dir (str): The directory to save the summary file.
         api_key (str): The API key for openai API.
         model_name (str): The model name used as blog generator.
     """
     os.environ["OPENAI_API_KEY"] = api_key
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
+    cost_manager = CostManager(model_name=model_name)
     transcriber = Transcriber(output_path=output_dir)
+    comic_story_generator = ComicStoryGenerator(model_name)
 
-    tasks = ["Transcribing Audio"]
+    tasks = ["Transcribing Audio", "Generating Comic Story", "Generating Comic"]
 
     with tqdm(total=len(tasks)) as pbar:
 
-        transcription_path = transcriber.transcribe_audio(audio_path)
-        utils.logging.info(f"Audio transcribed to: {transcription_path}")
+        transcription = transcriber.transcribe_audio(audio_path)
+        pbar.update(1)
+        comic_story = comic_story_generator.generate_story(transcription)
         pbar.update(1)
 
 
-    utils.logging.info(f"Blog post cost: {cost_manager.get_total_cost()}$")
+
 
 
 if __name__ == "__main__":

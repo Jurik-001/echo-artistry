@@ -10,8 +10,10 @@ class CostManager:
         model_name (str): The name of the model to use.
     """
 
-    def __init__(self, model_name):
+    def __init__(self, model_name=utils.DEFAULT_MODEL_NAME, image_model_name=utils.DEFAULT_IMAGE_MODEL_NAME, image_quality=utils.DEFAULT_IMAGE_QUALITY):
         self.model_name = model_name
+        self.image_model_name = image_model_name
+        self.image_quality = image_quality
         self.input_token_cost = utils.MODEL_TOKEN_LENGTH_MAPPING[model_name][
             "input_token_cost"
         ]
@@ -52,6 +54,36 @@ class CostManager:
         """
         token_count = self.token_counter.count_tokens(text)
         return self.calculate_cost_token(token_count, is_input=is_input)
+
+    def calculate_cost_messages(self, messages, is_input=True):
+        """Calculate the cost of a message.
+
+        Args:
+            messages (list): The message to calculate the cost of.
+            is_input (bool, optional): Whether the message is an input or an output.
+                Defaults to True.
+
+        Returns:
+            float: The cost of the message.
+        """
+        for message in messages:
+            text = message["content"]
+            self.calculate_cost_text(text, is_input=is_input)
+
+    def calculate_cost_image(self, image):
+        """Calculate the cost of an image.
+
+        Args:
+            image (Image): The image to calculate the cost of.
+
+        Returns:
+            float: The cost of the image.
+        """
+        image_size = image.size
+        image_size_string = f"{image_size[0]}x{image_size[1]}"
+        cost = utils.IMAGE_CHARACTER_LENGTH_MAPPING[self.image_model_name]["cost_per_image"][self.image_quality][image_size_string]
+        self.total_cost += cost
+        return cost
 
     def get_total_cost(self):
         """Get the total cost of the text.

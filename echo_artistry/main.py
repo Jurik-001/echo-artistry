@@ -9,7 +9,6 @@ from echo_artistry.src import utils
 from echo_artistry.src.transcriber import Transcriber
 from echo_artistry.src.comic_story_generator import ComicStoryGenerator
 from echo_artistry.src.comic_image_generator import ComicImageGenerator
-from echo_artistry.src.cost_management import CostManager
 
 
 def args_call():
@@ -17,7 +16,6 @@ def args_call():
     parser = argparse.ArgumentParser(
         description="Generate stunning art stories based on your voice message.",
     )
-    # TODO decide if it is cooler to have  it as argument or as input
     parser.add_argument(
         "audio_path",
         type=str,
@@ -54,7 +52,6 @@ def main(audio_path, output_dir, api_key, model_name):
     """
     os.environ["OPENAI_API_KEY"] = api_key
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
-    cost_manager = CostManager(model_name=model_name)
     transcriber = Transcriber(output_path=output_dir)
     file_name_generator = utils.FileNameGenerator()
     comic_story_generator = ComicStoryGenerator(model_name, output_dir)
@@ -80,6 +77,9 @@ def main(audio_path, output_dir, api_key, model_name):
         comic_image_file_name = f"{file_name}.png"
         comic_image_generator.generate_image(comic_story, file_name=comic_image_file_name)
         pbar.update(1)
+
+        total_cost = utils.OpenAIClient.cost_manager.get_total_cost()
+        utils.logging.info(f"Comic is generated.\nTotal cost: {total_cost} USD")
 
 
 if __name__ == "__main__":

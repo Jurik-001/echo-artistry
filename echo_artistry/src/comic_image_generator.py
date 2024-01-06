@@ -33,6 +33,6 @@ class ComicImageGenerator:
 
         if self.store_comic_images:
             comic_image_path = os.path.join(self.output_path, file_name)
-            utils.write_text_to_file(comic_image, comic_image_path)
+            comic_image.save(comic_image_path)
 
         return comic_image

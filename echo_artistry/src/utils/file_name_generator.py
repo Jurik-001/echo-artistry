@@ -3,38 +3,49 @@ import re
 from echo_artistry.src import utils
 
 MAX_RETRIES = 5
-MAX_FILE_NAME_LENGTH = 15
+MAX_FILE_NAME_LENGTH = 35
 
 
 class FileNameGenerator:
-    def __init__(self, model_name="gpt-3.5-turbo-1106", max_retries=MAX_RETRIES):
+    def __init__(self, model_name="gpt-3.5-turbo-1106", max_retries=MAX_RETRIES, max_file_name_length=MAX_FILE_NAME_LENGTH):
         self.client = utils.OpenAIClient(model_name=model_name)
+        self.max_file_name_length = max_file_name_length
         self.max_retries = max_retries
 
-    def validate_file_name(self, filename):
-        if re.match(r"^[a-z0-9_\-]+$", filename) and len(filename) < MAX_FILE_NAME_LENGTH:
+    @staticmethod
+    def _validate_file_name(filename):
+        if len(filename) < MAX_FILE_NAME_LENGTH:
             return True
         else:
             return False
+
+    @staticmethod
+    def _sanitize_string(topic):
+        topic = topic.lower()
+        sanitized = topic.replace(' ', '_')
+        sanitized = ''.join(char for char in sanitized if char.isalnum() or char == '_')
+
+        return sanitized
 
     def generate_file_name(self, text):
         msg = [
             {
                 "role": "system",
-                "content": f"The following text is in a txt file create a file name, that will match following regex: ^[a-z0-9_\-]+$ and is max {MAX_FILE_NAME_LENGTH} char long. \n provide only the name.",
+                "content": f"Name one important topic in following text.",
             },
-            {"role": "user", "content": f"TEXT: {text}"},
+            {"role": "user", "content": f"TEXT: {text} \n One topic: [TOPIC]"},
         ]
         for _ in range(self.max_retries):
             file_name = self.client.generate_answer(msg)
-            if self.validate_file_name(file_name):
+            file_name = self._sanitize_string(file_name)
+            if self._validate_file_name(file_name):
                 return file_name
             else:
                 msg.append({"role": "assistant", "content": file_name})
                 msg.append(
                     {
                         "role": "user",
-                        "content": f"The filename does not meet the requirements.",
+                        "content": f"The topic is to long please make it shorter, max character count: {self.max_file_name_length}.",
                     }
                 )
 

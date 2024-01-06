@@ -57,7 +57,7 @@ def main(audio_path, output_dir, api_key, model_name):
     cost_manager = CostManager(model_name=model_name)
     transcriber = Transcriber(output_path=output_dir)
     file_name_generator = utils.FileNameGenerator()
-    comic_story_generator = ComicStoryGenerator(model_name)
+    comic_story_generator = ComicStoryGenerator(model_name, output_dir)
     comic_image_generator = ComicImageGenerator(output_path=output_dir)
 
     tasks = [

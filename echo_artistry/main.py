@@ -86,7 +86,7 @@ def main(audio_path, output_path, api_key, model_name):
         comic_image_generator.generate_image(comic_story, file_name=comic_image_file_name)
         pbar.update(1)
 
-        total_cost = OpenAIClient.cost_manager.get_total_cost()
+        total_cost = cost_manager.get_total_cost()
         helper.logging.info(f"Comic is generated.\nTotal cost: {total_cost} USD")
 
 

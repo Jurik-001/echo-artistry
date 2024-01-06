@@ -93,7 +93,7 @@ class CostManager:
             float: The cost of the image.
         """
         image_size = image.size
-        image_size_string = f"{image_size[0]}x{image_size[1]}"
+        image_size_string = f"{image_size[0]}×{image_size[1]}"
         cost = helper.IMAGE_CHARACTER_LENGTH_MAPPING[self.image_model_name][
             "cost_per_image"
         ][self.image_quality][image_size_string]

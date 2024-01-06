@@ -1,10 +1,9 @@
 """Extracts audio from a video file and transcribes it to text."""
 
 import os
+from pathlib import Path
 
 import whisper
-
-from pathlib import Path
 
 from echo_artistry.src import utils
 
@@ -12,7 +11,8 @@ from echo_artistry.src import utils
 class Transcriber:
     """Extracts audio from a video file and transcribes it to text.
 
-    Attributes:
+    Attributes
+    ----------
         output_path (str): The path to the output directory.
     """
 
@@ -27,7 +27,7 @@ class Transcriber:
     def _storing_transcription(self, transcript_result, audio_file_path):
         audio_file_name = Path(audio_file_path).stem
         transcription_file_path = Path(
-            self.output_path, f"transcription_{audio_file_name}.txt"
+            self.output_path, f"transcription_{audio_file_name}.txt",
         )
         utils.write_text_to_file(transcript_result, str(transcription_file_path))
 
@@ -35,9 +35,11 @@ class Transcriber:
         """Transcribes audio to text.
 
         Args:
+        ----
             audio_file_path (str): The path to the audio file.
 
         Returns:
+        -------
             str: The transcription of the audio file.
         """
         transcript_result = self.transcribe_model.transcribe(audio_file_path)["text"]

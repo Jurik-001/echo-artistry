@@ -1,11 +1,9 @@
 # noqa: D104
 
-from . import exceptions
-from . import utils
-from .transcriber import Transcriber
-from .comic_story_generator import CompositeOption
-from .comic_story_generator import ComicStoryGenerator
+from . import exceptions, utils
 from .comic_image_generator import ComicImageGenerator
+from .comic_story_generator import ComicStoryGenerator, CompositeOption
+from .transcriber import Transcriber
 
 __all__ = [
     "Transcriber",

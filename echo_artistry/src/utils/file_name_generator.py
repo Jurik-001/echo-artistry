@@ -46,7 +46,7 @@ class FileNameGenerator:
                     {
                         "role": "user",
                         "content": f"The topic is to long please make it shorter, max character count: {self.max_file_name_length}.",
-                    }
+                    },
                 )
 
         raise Exception("Max retries exceeded.")

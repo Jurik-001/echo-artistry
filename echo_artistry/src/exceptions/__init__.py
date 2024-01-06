@@ -1,1 +1,3 @@
-from .openai_exceptions import OpenAIError, ContentPolicyViolation
+# noqa: D104
+
+from .openai_exceptions import ContentPolicyViolation, OpenAIError

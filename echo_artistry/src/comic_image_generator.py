@@ -1,3 +1,5 @@
+""""""
+
 import os
 
 from echo_artistry.src import utils
@@ -23,10 +25,12 @@ class ComicImageGenerator:
         """Generate a comic description from a text.
 
         Args:
+        ----
             text (str): The text to generate the
             composite_option (CompositeOption): The composite option for the comic.
 
         Returns:
+        -------
             str: The generated description.
         """
         comic_image = self.client.generate_image(text)

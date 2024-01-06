@@ -1,5 +1,5 @@
-from enum import Enum
 import os
+from enum import Enum
 
 from echo_artistry.src import utils
 
@@ -55,7 +55,7 @@ class ComicStoryGenerator:
             else:
                 msg.append({"role": "assistant", "content": comic_story})
                 msg.append(
-                    {"role": "user", "content": f"Keep the content shorter shorter."}
+                    {"role": "user", "content": f"Keep the content shorter shorter."},
                 )
 
         raise Exception("Max retries exceeded.")
@@ -69,17 +69,19 @@ class ComicStoryGenerator:
         """Generate a comic description from a text.
 
         Args:
+        ----
             text (str): The text to generate the comic description from.
             composite_option (CompositeOption): The composite option for the comic.
 
         Returns:
+        -------
             str: The generated description.
         """
         if composite_option == CompositeOption.SINGLE_IMAGE:
             comic_story = self.rewrite_text_to_comic_story(text)
         else:
             raise NotImplementedError(
-                f"Composite option {composite_option} not implemented."
+                f"Composite option {composite_option} not implemented.",
             )
 
         if self.store_comic_stories:

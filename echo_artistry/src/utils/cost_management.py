@@ -6,7 +6,8 @@ from echo_artistry.src import utils
 class CostManager:
     """This class is used to calculate the cost of a text.
 
-    Attributes:
+    Attributes
+    ----------
         model_name (str): The name of the model to use.
     """
 
@@ -28,10 +29,12 @@ class CostManager:
         """Calculate the cost of a text.
 
         Args:
+        ----
             token_count (int): The number of tokens in the text.
             is_input (bool, optional): Whether text is input or output. Defaults to True.
 
         Returns:
+        -------
             float: The cost of the text.
         """
         if is_input:
@@ -45,11 +48,13 @@ class CostManager:
         """Calculate the cost of a text.
 
         Args:
+        ----
             text (str): The text to calculate the cost of.
             is_input (bool, optional): Whether the text is an input or an output.
                 Defaults to True.
 
         Returns:
+        -------
             float: The cost of the text.
         """
         token_count = self.token_counter.count_tokens(text)
@@ -59,11 +64,13 @@ class CostManager:
         """Calculate the cost of a message.
 
         Args:
+        ----
             messages (list): The message to calculate the cost of.
             is_input (bool, optional): Whether the message is an input or an output.
                 Defaults to True.
 
         Returns:
+        -------
             float: The cost of the message.
         """
         for message in messages:
@@ -74,9 +81,11 @@ class CostManager:
         """Calculate the cost of an image.
 
         Args:
+        ----
             image (Image): The image to calculate the cost of.
 
         Returns:
+        -------
             float: The cost of the image.
         """
         image_size = image.size
@@ -88,7 +97,8 @@ class CostManager:
     def get_total_cost(self):
         """Get the total cost of the text.
 
-        Returns:
+        Returns
+        -------
             float: The total cost of the text.
         """
         return self.total_cost

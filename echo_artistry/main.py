@@ -6,9 +6,9 @@ import os
 from tqdm import tqdm
 
 from echo_artistry.src import utils
-from echo_artistry.src.transcriber import Transcriber
-from echo_artistry.src.comic_story_generator import ComicStoryGenerator
 from echo_artistry.src.comic_image_generator import ComicImageGenerator
+from echo_artistry.src.comic_story_generator import ComicStoryGenerator
+from echo_artistry.src.transcriber import Transcriber
 
 
 def args_call():
@@ -45,6 +45,7 @@ def main(audio_path, output_dir, api_key, model_name):
     """Download, transcribe, and generate comics from a voice memo.
 
     Args:
+    ----
         audio_path (str): The path to the audio file.
         output_dir (str): The directory to save the summary file.
         api_key (str): The API key for openai API.
@@ -71,7 +72,7 @@ def main(audio_path, output_dir, api_key, model_name):
         pbar.update(1)
         comic_file_name = f"{file_name}.txt"
         comic_story = comic_story_generator.generate_story(
-            transcription, file_name=comic_file_name
+            transcription, file_name=comic_file_name,
         )
         pbar.update(1)
         comic_image_file_name = f"{file_name}.png"

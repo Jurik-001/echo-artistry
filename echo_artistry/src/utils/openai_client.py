@@ -1,14 +1,16 @@
 """OpenAI API client."""
-from openai import OpenAI
-import requests
-from PIL import Image
 from io import BytesIO
-from echo_artistry.src import utils
-from echo_artistry.src import exceptions
+
+import requests
+from openai import OpenAI
+from PIL import Image
+
+from echo_artistry.src import exceptions, utils
 
 
 class OpenAIClient:
     """OpenAI API client."""
+
     cost_manager = None
 
     def __init__(
@@ -36,9 +38,11 @@ class OpenAIClient:
         """Generate answer.
 
         Args:
+        ----
             messages (list(str)): List of messages.
 
         Returns:
+        -------
             str: Generated answer.
         """
         self.calculate_cost(messages, is_input=True, is_image=False)
@@ -48,7 +52,7 @@ class OpenAIClient:
                 messages=messages,
             )
             utils.logger.debug(
-                f"Messages: {messages} Response: {response.choices[0].message.content}"
+                f"Messages: {messages} Response: {response.choices[0].message.content}",
             )
             result = response.choices[0].message.content
             self.calculate_cost(messages, is_input=False, is_image=False)
@@ -64,9 +68,11 @@ class OpenAIClient:
         """Generate image.
 
         Args:
+        ----
             prompt (str): Prompt.
 
         Returns:
+        -------
             str: Generated image.
         """
         self.calculate_cost(prompt, is_input=True, is_image=True)
@@ -81,7 +87,7 @@ class OpenAIClient:
         except Exception as e:
             if "content_policy_violation" in str(e):
                 raise exceptions.ContentPolicyViolation(
-                    "The given text contains content which violates the OpenAI content policy."
+                    "The given text contains content which violates the OpenAI content policy.",
                 )
             else:
                 raise exceptions.OpenAIError(f"An unexpected error occurred: {e}") from e

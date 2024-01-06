@@ -7,12 +7,31 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+openai = "^1.6.1"
+openai-whisper = { git = "https://github.com/openai/whisper.git" }
+pillow = "^10.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.9"
 pytest = "^7.4.4"
 notebook = "^7.0.6"
+black = "^23.12.1"
+
+[tool.black]
+line-length = 90
+
+[tool.ruff]
+line-length = 90
+select = [
+    "E", # Pycodestyle errors: These are coding standard errors found by Pycodestyle (formerly known as Pep8).
+    "I", # Isort errors: Issues related to import formatting.
+    "D", # Pydocstyle errors: Docstring style issues.
+    "COM", # Flake8-commas errors: Issues related to commas (e.g., missing trailing commas).
+]
+ignore = [
+  "D107",  # Missing docstring in __init__
+]
 
 [build-system]
 requires = ["poetry-core"]

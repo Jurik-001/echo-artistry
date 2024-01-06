@@ -1,10 +1,12 @@
-
+"""file_name_generator contains FileNameGenerator."""
 
 MAX_RETRIES = 5
 MAX_FILE_NAME_LENGTH = 35
 
 
 class FileNameGenerator:
+    """A class for generating a file name from a text."""
+
     def __init__(
         self,
         client,
@@ -31,6 +33,16 @@ class FileNameGenerator:
         return sanitized
 
     def generate_file_name(self, text):
+        """Generate a file name from a text.
+
+        Args:
+        ----
+            text (str): The text to generate a file name from.
+
+        Returns:
+        -------
+            str: The generated file name.
+        """
         msg = [
             {
                 "role": "system",
@@ -48,7 +60,8 @@ class FileNameGenerator:
                 msg.append(
                     {
                         "role": "user",
-                        "content": f"The topic is to long please make it shorter, max character count: {self.max_file_name_length}.",
+                        "content": f"The topic is to long please make it shorter,"
+                                   f"max character count: {self.max_file_name_length}.",
                     },
                 )
 

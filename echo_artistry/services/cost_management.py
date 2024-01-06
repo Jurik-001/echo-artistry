@@ -1,10 +1,10 @@
-"""This module is used to calculate the cost of a text."""
+"""cost_management contains CostManager."""
 
 from echo_artistry.utils import helper
 
 
 class CostManager:
-    """This class is used to calculate the cost of a text."""
+    """CostManager is used to calculate the cost of a text."""
 
     total_cost = 0
 

@@ -1,3 +1,4 @@
+"""token_counter contains TokenCounter."""
 import tiktoken
 
 from echo_artistry import utils

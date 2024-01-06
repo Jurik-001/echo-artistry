@@ -1,4 +1,4 @@
-""""""
+"""comic_image_generator contains the ComicImageGenerator class."""
 
 import os
 
@@ -6,6 +6,8 @@ MAX_RETRIES = 5
 
 
 class ComicImageGenerator:
+    """A class for generating a comic image from a text."""
+
     def __init__(
         self,
         client,
@@ -26,6 +28,7 @@ class ComicImageGenerator:
         ----
             text (str): The text to generate the
             composite_option (CompositeOption): The composite option for the comic.
+            file_name (str): The name of the file to store the comic description.
 
         Returns:
         -------

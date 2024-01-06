@@ -1,4 +1,4 @@
-"""OpenAI API client."""
+"""openai_client contains OpenAIClient class."""
 from io import BytesIO
 
 import requests
@@ -27,7 +27,7 @@ class OpenAIClient:
         self.image_quality = image_quality
         self.client = OpenAI()
 
-    def calculate_cost(self, messages=None, image=None, is_input=True):
+    def _calculate_cost(self, messages=None, image=None, is_input=True):
         if image:
             self.cost_manager.calculate_cost_image(image)
         if messages:
@@ -44,7 +44,7 @@ class OpenAIClient:
         -------
             str: Generated answer.
         """
-        self.calculate_cost(messages=messages, is_input=True)
+        self._calculate_cost(messages=messages, is_input=True)
         try:
             response = self.client.chat.completions.create(
                 model=self.model_name,
@@ -58,10 +58,10 @@ class OpenAIClient:
             raise exceptions.OpenAIError(f"An unexpected error occurred: {e}") from e
 
         result_message = [{"role": "assistant", "content": result_text}]
-        self.calculate_cost(messages=result_message, is_input=False)
+        self._calculate_cost(messages=result_message, is_input=False)
         return result_text
 
-    def retrieve_image_from_url(self, url):
+    def _retrieve_image_from_url(self, url):
         response = requests.get(url)
         return Image.open(BytesIO(response.content))
 
@@ -87,10 +87,11 @@ class OpenAIClient:
         except Exception as e:
             if "content_policy_violation" in str(e):
                 raise exceptions.ContentPolicyViolation(
-                    "The given text contains content which violates the OpenAI content policy.",
+                    "The given text contains content which "
+                    "violates the OpenAI content policy.",
                 )
             else:
                 raise exceptions.OpenAIError(f"An unexpected error occurred: {e}") from e
-        image = self.retrieve_image_from_url(response.data[0].url)
-        self.calculate_cost(image=image, is_input=True)
+        image = self._retrieve_image_from_url(response.data[0].url)
+        self._calculate_cost(image=image, is_input=True)
         return image

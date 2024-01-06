@@ -1,4 +1,4 @@
-"""Extracts audio from a video file and transcribes it to text."""
+"""transcriber contains Transcriber class."""
 
 import os
 from pathlib import Path
@@ -9,12 +9,7 @@ from echo_artistry import utils
 
 
 class Transcriber:
-    """Extracts audio from a video file and transcribes it to text.
-
-    Attributes
-    ----------
-        output_path (str): The path to the output directory.
-    """
+    """Extracts audio from a video file and transcribes it to text."""
 
     def __init__(self, output_path="audios", store_transcription=True):
         self.transcribe_model = whisper.load_model("base")

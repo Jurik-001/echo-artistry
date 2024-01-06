@@ -1,4 +1,4 @@
-"""This module provides utility functions."""
+"""helper module provides utility functions and constants."""
 
 import logging
 

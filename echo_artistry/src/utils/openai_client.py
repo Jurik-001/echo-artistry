@@ -11,8 +11,6 @@ from echo_artistry.src import exceptions, utils
 class OpenAIClient:
     """OpenAI API client."""
 
-    cost_manager = None
-
     def __init__(
         self,
         model_name=utils.DEFAULT_MODEL_NAME,
@@ -25,8 +23,7 @@ class OpenAIClient:
         self.image_size = image_size
         self.image_quality = image_quality
         self.client = OpenAI()
-        if OpenAIClient.cost_manager is None:
-            OpenAIClient.cost_manager = utils.CostManager(self.model_name, self.image_model_name, self.image_quality)
+        self.cost_manager = utils.CostManager(self.model_name, self.image_model_name, self.image_quality)
 
     def calculate_cost(self, messages, is_input=True, is_image=False):
         if is_image:

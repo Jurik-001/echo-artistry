@@ -5,11 +5,8 @@ from echo_artistry.src import utils
 
 class CostManager:
     """This class is used to calculate the cost of a text.
-
-    Attributes
-    ----------
-        model_name (str): The name of the model to use.
     """
+    total_cost = 0
 
     def __init__(self, model_name=utils.DEFAULT_MODEL_NAME, image_model_name=utils.DEFAULT_IMAGE_MODEL_NAME, image_quality=utils.DEFAULT_IMAGE_QUALITY):
         self.model_name = model_name
@@ -22,7 +19,6 @@ class CostManager:
             "output_token_cost"
         ]
         self.token_counter = utils.TokenCounter(self.model_name)
-        self.total_cost = 0
         self.per_n_tokens = 1000
 
     def calculate_cost_token(self, token_count, is_input=True):

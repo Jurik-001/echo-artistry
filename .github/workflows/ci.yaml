@@ -6,7 +6,6 @@ on:
 
 jobs:
   lint:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +26,6 @@ jobs:
         poetry run ruff echo_artistry
 
   test:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -46,6 +44,27 @@ jobs:
     - name: Test with Pytest
       run: |
         poetry run pytest --cov=echo_artistry
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry install
+
+      - name: Build
+        run: |
+          poetry build
+    
 
         
         

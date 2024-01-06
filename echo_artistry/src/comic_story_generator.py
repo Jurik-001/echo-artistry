@@ -1,6 +1,5 @@
 from enum import Enum
 import os
-import re
 
 from echo_artistry.src import utils
 
@@ -18,8 +17,9 @@ class CompositeOption(Enum):
 
 
 class ComicStoryGenerator:
-    def __init__(self, model_name="gpt-3.5-turbo-1106", output_path="comic_stories", store_comic_story=True):
+    def __init__(self, model_name=utils.DEFAULT_MODEL_NAME, output_path="comic_stories", max_retries=MAX_RETRIES, store_comic_story=True):
         self.client = utils.OpenAIClient(model_name=model_name)
+        self.max_retries = max_retries
         self.output_path = output_path
         self.store_comic_stories = store_comic_story
         if self.store_comic_stories:
@@ -44,28 +44,7 @@ class ComicStoryGenerator:
 
         raise Exception("Max retries exceeded.")
 
-    def validate_file_name(self, filename):
-        if re.match(r"^[a-z0-9_\-]+$", filename) and len(filename) < MAX_FILE_NAME_LENGTH:
-            return True
-        else:
-            return False
-
-    def generate_file_name(self, text):
-        msg = [
-            {"role": "system", "content": f"The following text is in a txt file create a file name, that will match following regex: ^[a-z0-9_\-]+$ and is max {MAX_FILE_NAME_LENGTH} char long."},
-            {"role": "user", "content": f"TEXT: {text}"},
-        ]
-        for _ in range(MAX_RETRIES):
-            file_name = self.client.generate_answer(msg)
-            if self.validate_file_name(file_name):
-                return file_name
-            else:
-                msg.append({"role": "assistant", "content": file_name})
-                msg.append({"role": "user", "content": f"The filename does not meet the requirements."})
-
-        raise Exception("Max retries exceeded.")
-
-    def generate_story(self, text, composite_option: CompositeOption=CompositeOption.SINGLE_IMAGE):
+    def generate_story(self, text, composite_option: CompositeOption=CompositeOption.SINGLE_IMAGE, file_name="comic.txt"):
         """Generate a comic description from a text.
 
         Args:
@@ -81,7 +60,7 @@ class ComicStoryGenerator:
             raise NotImplementedError(f"Composite option {composite_option} not implemented.")
 
         if self.store_comic_stories:
-            comic_story_path = f"{self.output_path}/{self.generate_file_name(text)}.txt"
+            comic_story_path = f"{self.output_path}/{file_name}"
             utils.write_text_to_file(comic_story, comic_story_path)
 
         return comic_story

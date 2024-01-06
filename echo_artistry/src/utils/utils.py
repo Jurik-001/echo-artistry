@@ -41,11 +41,26 @@ IMAGE_CHARACTER_LENGTH_MAPPING = {
     },
     "dall-e-3": {
         "character_length": 4000,
+        "cost_per_image": {
+            "standard": {
+                "1024×1024": 0.040,
+                "1024×1792": 0.080,
+                "1792×1024": 0.080,
+            },
+            "hd": {
+                "1024×1024": 0.080,
+                "1024×1792": 0.120,
+                "1792×1024": 0.120,
+            }
+        }
     }
 
 }
 
 DEFAULT_MODEL_NAME = "gpt-3.5-turbo-1106"
+DEFAULT_IMAGE_MODEL_NAME = "dall-e-3"
+DEFAULT_IMAGE_SIZE = "1792x1024"
+MAX_RETRIES = 5
 
 
 def write_text_to_file(text, file_path):
@@ -73,21 +88,3 @@ def get_text_from_file(file_path):
     return text
 
 
-class TokenCounter:
-    """A class for counting tokens."""
-
-    def __init__(self, model_name=DEFAULT_MODEL_NAME):
-        self.encoding = tiktoken.encoding_for_model(model_name)
-        self.model_token_length = MODEL_TOKEN_LENGTH_MAPPING[model_name]["token_length"]
-
-    def count_tokens(self, text):
-        """Count the number of tokens in a text.
-
-        Args:
-            text (str): The text to count the tokens of.
-
-        Returns:
-            int: The number of tokens in the text.
-        """
-        token_count = len(self.encoding.encode(text))
-        return token_count

@@ -6,18 +6,14 @@ from io import BytesIO
 from echo_artistry.src import utils
 from echo_artistry.src import exceptions
 
-MODEL_NAME = "gpt-3.5-turbo-1106"
-IMAGE_MODEL_NAME = "dall-e-3"
-DEFAULT_IMAGE_SIZE = "1792x1024"
 
-
-# TODO Getting error message for tokenlimit from openai, use it
 class OpenAIClient:
     """OpenAI API client."""
 
-    def __init__(self, model_name=MODEL_NAME, image_model_name=IMAGE_MODEL_NAME):
+    def __init__(self, model_name=utils.DEFAULT_MODEL_NAME, image_model_name=utils.DEFAULT_IMAGE_MODEL_NAME, image_size=utils.DEFAULT_IMAGE_SIZE):
         self.model_name = model_name
         self.image_model_name = image_model_name
+        self.image_size = image_size
         self.client = OpenAI()
 
     def generate_answer(self, messages):
@@ -56,7 +52,7 @@ class OpenAIClient:
             response = self.client.images.generate(
                 model=self.image_model_name,
                 prompt=prompt,
-                size=DEFAULT_IMAGE_SIZE,
+                size=self.image_size,
                 quality="standard",
                 n=1,
             )

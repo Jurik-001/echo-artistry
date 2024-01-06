@@ -8,6 +8,7 @@ from tqdm import tqdm
 from echo_artistry.src import utils
 from echo_artistry.src.transcriber import Transcriber
 from echo_artistry.src.comic_story_generator import ComicStoryGenerator
+from echo_artistry.src.comic_image_generator import ComicImageGenerator
 from echo_artistry.src.cost_management import CostManager
 
 
@@ -53,16 +54,26 @@ def main(audio_path, output_dir, api_key, model_name):
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
     cost_manager = CostManager(model_name=model_name)
     transcriber = Transcriber(output_path=output_dir)
+    file_name_generator = utils.FileNameGenerator()
     comic_story_generator = ComicStoryGenerator(model_name)
+    comic_image_generator = ComicImageGenerator(output_path=output_dir)
 
-    tasks = ["Transcribing Audio", "Generating Comic Story", "Generating Comic"]
+    tasks = ["Transcribing audio", "Generate file name", "Generating comic story", "Generating comic"]
 
     with tqdm(total=len(tasks)) as pbar:
 
         transcription = transcriber.transcribe_audio(audio_path)
         pbar.update(1)
-        comic_story = comic_story_generator.generate_story(transcription)
+        file_name = file_name_generator.generate_file_name(transcription)
         pbar.update(1)
+        comic_file_name = f"{file_name}.txt"
+        comic_story = comic_story_generator.generate_story(transcription, file_name=comic_file_name)
+        pbar.update(1)
+        comic_image_file_name = f"{file_name}.png"
+        comic_image_generator.generate_image(comic_story, file_name=comic_image_file_name)
+        pbar.update(1)
+
+
 
 
 

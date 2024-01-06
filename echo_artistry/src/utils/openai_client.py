@@ -23,7 +23,9 @@ class OpenAIClient:
         self.image_size = image_size
         self.image_quality = image_quality
         self.client = OpenAI()
-        self.cost_manager = utils.CostManager(self.model_name, self.image_model_name, self.image_quality)
+        self.cost_manager = utils.CostManager(
+            self.model_name, self.image_model_name, self.image_quality,
+        )
 
     def calculate_cost(self, messages, is_input=True, is_image=False):
         if is_image:

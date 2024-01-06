@@ -72,7 +72,8 @@ def main(audio_path, output_dir, api_key, model_name):
         pbar.update(1)
         comic_file_name = f"{file_name}.txt"
         comic_story = comic_story_generator.generate_story(
-            transcription, file_name=comic_file_name,
+            transcription,
+            file_name=comic_file_name,
         )
         pbar.update(1)
         comic_image_file_name = f"{file_name}.png"

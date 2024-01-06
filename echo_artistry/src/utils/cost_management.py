@@ -4,11 +4,16 @@ from echo_artistry.src import utils
 
 
 class CostManager:
-    """This class is used to calculate the cost of a text.
-    """
+    """This class is used to calculate the cost of a text."""
+
     total_cost = 0
 
-    def __init__(self, model_name=utils.DEFAULT_MODEL_NAME, image_model_name=utils.DEFAULT_IMAGE_MODEL_NAME, image_quality=utils.DEFAULT_IMAGE_QUALITY):
+    def __init__(
+        self,
+        model_name=utils.DEFAULT_MODEL_NAME,
+        image_model_name=utils.DEFAULT_IMAGE_MODEL_NAME,
+        image_quality=utils.DEFAULT_IMAGE_QUALITY,
+    ):
         self.model_name = model_name
         self.image_model_name = image_model_name
         self.image_quality = image_quality
@@ -86,7 +91,9 @@ class CostManager:
         """
         image_size = image.size
         image_size_string = f"{image_size[0]}x{image_size[1]}"
-        cost = utils.IMAGE_CHARACTER_LENGTH_MAPPING[self.image_model_name]["cost_per_image"][self.image_quality][image_size_string]
+        cost = utils.IMAGE_CHARACTER_LENGTH_MAPPING[self.image_model_name][
+            "cost_per_image"
+        ][self.image_quality][image_size_string]
         self.total_cost += cost
         return cost
 

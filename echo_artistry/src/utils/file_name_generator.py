@@ -7,7 +7,12 @@ MAX_FILE_NAME_LENGTH = 35
 
 
 class FileNameGenerator:
-    def __init__(self, model_name="gpt-3.5-turbo-1106", max_retries=MAX_RETRIES, max_file_name_length=MAX_FILE_NAME_LENGTH):
+    def __init__(
+        self,
+        model_name="gpt-3.5-turbo-1106",
+        max_retries=MAX_RETRIES,
+        max_file_name_length=MAX_FILE_NAME_LENGTH,
+    ):
         self.client = utils.OpenAIClient(model_name=model_name)
         self.max_file_name_length = max_file_name_length
         self.max_retries = max_retries
@@ -22,8 +27,8 @@ class FileNameGenerator:
     @staticmethod
     def _sanitize_string(topic):
         topic = topic.lower()
-        sanitized = topic.replace(' ', '_')
-        sanitized = ''.join(char for char in sanitized if char.isalnum() or char == '_')
+        sanitized = topic.replace(" ", "_")
+        sanitized = "".join(char for char in sanitized if char.isalnum() or char == "_")
 
         return sanitized
 

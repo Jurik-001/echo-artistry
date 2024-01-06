@@ -27,7 +27,8 @@ class Transcriber:
     def _storing_transcription(self, transcript_result, audio_file_path):
         audio_file_name = Path(audio_file_path).stem
         transcription_file_path = Path(
-            self.output_path, f"transcription_{audio_file_name}.txt",
+            self.output_path,
+            f"transcription_{audio_file_name}.txt",
         )
         utils.write_text_to_file(transcript_result, str(transcription_file_path))
 

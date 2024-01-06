@@ -39,9 +39,9 @@ IMAGE_CHARACTER_LENGTH_MAPPING = {
         "character_length": 1000,
         "cost_per_image": {
             "standard": {
-                "1024×1024": 0.020,
-                "512×512": 0.018,
-                "256×256": 0.016,
+                "1024x1024": 0.020,
+                "512x512": 0.018,
+                "256x256": 0.016,
             },
         },
     },
@@ -49,14 +49,14 @@ IMAGE_CHARACTER_LENGTH_MAPPING = {
         "character_length": 4000,
         "cost_per_image": {
             "standard": {
-                "1024×1024": 0.040,
-                "1024×1792": 0.080,
-                "1792×1024": 0.080,
+                "1024x1024": 0.040,
+                "1024x1792": 0.080,
+                "1792x1024": 0.080,
             },
             "hd": {
-                "1024×1024": 0.080,
-                "1024×1792": 0.120,
-                "1792×1024": 0.120,
+                "1024x1024": 0.080,
+                "1024x1792": 0.120,
+                "1792x1024": 0.120,
             },
         },
     },
@@ -64,7 +64,7 @@ IMAGE_CHARACTER_LENGTH_MAPPING = {
 
 DEFAULT_MODEL_NAME = "gpt-3.5-turbo-1106"
 DEFAULT_IMAGE_MODEL_NAME = "dall-e-3"
-DEFAULT_IMAGE_SIZE = "1792×1024"
+DEFAULT_IMAGE_SIZE = "1792x1024"
 DEFAULT_IMAGE_QUALITY = "standard"
 MAX_RETRIES = 5
 

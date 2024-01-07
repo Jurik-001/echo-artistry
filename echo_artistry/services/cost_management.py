@@ -95,7 +95,7 @@ class CostManager:
     def get_total_cost(self):
         """Get the total cost of the text.
 
-        Returns
+        Returns:
             float: The total cost of the text.
         """
         return self.total_cost

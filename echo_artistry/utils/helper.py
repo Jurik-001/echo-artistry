@@ -73,7 +73,6 @@ def write_text_to_file(text, file_path):
     """Write text to a file.
 
     Args:
-    ----
         text (str): The text to write.
         file_path (str): The path to the file.
     """
@@ -85,11 +84,9 @@ def get_text_from_file(file_path):
     """Get the text from a file.
 
     Args:
-    ----
         file_path (str): The path to the file.
 
     Returns:
-    -------
         str: The text from the file.
     """
     with open(file_path, "r") as file:

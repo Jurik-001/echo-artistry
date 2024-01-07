@@ -36,11 +36,9 @@ class ComicStoryGenerator:
         """Rewrite a text to a comic story.
 
         Args:
-        ----
             text (str): The text to rewrite to a comic story.
 
         Returns:
-        -------
             str: The comic story.
         """
         msg = [
@@ -79,13 +77,11 @@ class ComicStoryGenerator:
         """Generate a comic description from a text.
 
         Args:
-        ----
             text (str): The text to generate the comic description from.
             composite_option (CompositeOption): The composite option for the comic.
             file_name (str): The name of the file to store the comic story.
 
         Returns:
-        -------
             str: The generated description.
         """
         if composite_option == CompositeOption.SINGLE_IMAGE:

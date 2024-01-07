@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "echo-artistry"
 version = "0.0.1"
-description = "EchoArtistry is an innovative tool that transforms spoken words into captivating visual stories and summaries."
+description = "EchoArtistry is an innovative tool that transforms spoken words into captivating visual stories."
 authors = ["Jurik-001"]
 readme = "README.md"
 
@@ -32,6 +32,9 @@ select = [
 ignore = [
   "D107",  # Missing docstring in __init__
 ]
+
+[tool.ruff.pydocstyle]
+convention = "google"
 
 [build-system]
 requires = ["poetry-core"]

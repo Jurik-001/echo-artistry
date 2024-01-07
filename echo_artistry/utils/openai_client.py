@@ -37,11 +37,9 @@ class OpenAIClient:
         """Generate answer.
 
         Args:
-        ----
             messages (list(str)): List of messages.
 
         Returns:
-        -------
             str: Generated answer.
         """
         self._calculate_cost(messages=messages, is_input=True)
@@ -69,11 +67,9 @@ class OpenAIClient:
         """Generate image.
 
         Args:
-        ----
             prompt (str): Prompt.
 
         Returns:
-        -------
             str: Generated image.
         """
         try:

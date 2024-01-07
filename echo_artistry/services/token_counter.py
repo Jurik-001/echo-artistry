@@ -17,11 +17,9 @@ class TokenCounter:
         """Count the number of tokens in a text.
 
         Args:
-        ----
             text (str): The text to count the tokens of.
 
         Returns:
-        -------
             int: The number of tokens in the text.
         """
         token_count = len(self.encoding.encode(text))

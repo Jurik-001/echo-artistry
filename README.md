@@ -2,7 +2,7 @@
 [![Downloads](https://static.pepy.tech/badge/echo-artistry)](https://pepy.tech/project/echo-artistry)
 ![GitHub issues](https://img.shields.io/github/issues/Jurik-001/echo-artistry)
 [![Python CI](https://github.com/Jurik-001/echo-artistry/actions/workflows/ci.yaml/badge.svg)](https://github.com/Jurik-001/echo-artistry/actions/workflows/ci.yaml)
-[![Documentation](https://img.shields.io/badge/-Documentation-gray?logo=readthedocs&style=flat&logoWidth=20)](https://essenceextractor.readthedocs.io/en/latest/)
+[![Documentation Status](https://readthedocs.org/projects/echo-artistry/badge/?version=latest)](https://echo-artistry.readthedocs.io/en/latest/?badge=latest)
 
 # EchoArtistry 🎨🔊
 

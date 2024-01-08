@@ -41,8 +41,8 @@ EchoArtistry will create in your output directory:
 - **Comic Image File (.png)**: The final comic strip.
 
 ## Documentation 📖
-For more details on EchoArtistry's capabilities and how to use them, visit our [documentation](https://echoartistry.readthedocs.io/en/latest/).
+For more details on EchoArtistry's capabilities and how to use them, visit our [documentation](https://echo-artistry.readthedocs.io/en/latest/).
 
 ## Join the EchoArtistry Community 🤝
 
-We love collaboration and feedback! 🚀 If you have ideas or encounter any issues, please contribute. Check out our [contributing guidelines](https://github.com/Jurik-001/echo-artistry/blob/feature/documentation/.github/CONTRIBUTING.md) to get started.
+We love collaboration and feedback! 🚀 If you have ideas or encounter any issues, please contribute. Check out our [contributing guidelines](https://github.com/Jurik-001/echo-artistry/blob/main/.github/CONTRIBUTING.md) to get started.

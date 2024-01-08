@@ -17,6 +17,9 @@ ruff = "^0.1.9"
 pytest = "^7.4.4"
 notebook = "^7.0.6"
 black = "^23.12.1"
+sphinx = "^7.2.6"
+sphinx-rtd-theme = "^2.0.0"
+myst-parser = "^2.0.0"
 
 [tool.black]
 line-length = 90

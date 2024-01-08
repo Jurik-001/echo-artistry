@@ -45,8 +45,4 @@ For more details on EchoArtistry's capabilities and how to use them, visit our [
 
 ## Join the EchoArtistry Community 🤝
 
-We love collaboration and feedback! 🚀 If you have ideas or encounter any issues, please contribute. Check out our [contributing guidelines](https://github.com/yourusername/EchoArtistry/blob/master/.github/CONTRIBUTING.md) to get started.
-
-## Roadmap 🗺️
-
-Stay tuned for what's next in EchoArtistry's journey! Check out our [project roadmap](https://github.com/users/yourusername/projects/1) for upcoming features and enhancements. We're dedicated to improving EchoArtistry and expanding its storytelling capabilities.
+We love collaboration and feedback! 🚀 If you have ideas or encounter any issues, please contribute. Check out our [contributing guidelines](https://github.com/Jurik-001/echo-artistry/blob/master/.github/CONTRIBUTING.md) to get started.

@@ -31,11 +31,9 @@ class Transcriber:
         """Transcribes audio to text.
 
         Args:
-        ----
             audio_file_path (str): The path to the audio file.
 
         Returns:
-        -------
             str: The transcription of the audio file.
         """
         transcript_result = self.transcribe_model.transcribe(audio_file_path)["text"]

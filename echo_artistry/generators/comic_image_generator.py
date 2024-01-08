@@ -25,13 +25,11 @@ class ComicImageGenerator:
         """Generate a comic description from a text.
 
         Args:
-        ----
             text (str): The text to generate the
             composite_option (CompositeOption): The composite option for the comic.
             file_name (str): The name of the file to store the comic description.
 
         Returns:
-        -------
             str: The generated description.
         """
         comic_image = self.client.generate_image(text)

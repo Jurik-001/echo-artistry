@@ -36,11 +36,9 @@ class FileNameGenerator:
         """Generate a file name from a text.
 
         Args:
-        ----
             text (str): The text to generate a file name from.
 
         Returns:
-        -------
             str: The generated file name.
         """
         msg = [

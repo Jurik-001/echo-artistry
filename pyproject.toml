@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "echo-artistry"
 version = "0.0.1"
-description = "EchoArtistry is an innovative tool that transforms spoken words into captivating visual stories and summaries."
+description = "EchoArtistry is an innovative tool that transforms spoken words into captivating visual stories."
 authors = ["Jurik-001"]
 readme = "README.md"
 
@@ -17,6 +17,9 @@ ruff = "^0.1.9"
 pytest = "^7.4.4"
 notebook = "^7.0.6"
 black = "^23.12.1"
+sphinx = "^7.2.6"
+sphinx-rtd-theme = "^2.0.0"
+myst-parser = "^2.0.0"
 
 [tool.black]
 line-length = 90
@@ -32,6 +35,9 @@ select = [
 ignore = [
   "D107",  # Missing docstring in __init__
 ]
+
+[tool.ruff.pydocstyle]
+convention = "google"
 
 [build-system]
 requires = ["poetry-core"]

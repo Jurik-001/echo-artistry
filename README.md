@@ -1,5 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Downloads](https://static.pepy.tech/badge/essence-extractor)](https://pepy.tech/project/echo-artistry)
+[![Downloads](https://static.pepy.tech/badge/echo-artistry)](https://pepy.tech/project/echo-artistry)
 ![GitHub issues](https://img.shields.io/github/issues/Jurik-001/echo-artistry)
 [![Python CI](https://github.com/Jurik-001/echo-artistry/actions/workflows/ci.yaml/badge.svg)](https://github.com/Jurik-001/echo-artistry/actions/workflows/ci.yaml)
 [![Documentation](https://img.shields.io/badge/-Documentation-gray?logo=readthedocs&style=flat&logoWidth=20)](https://essenceextractor.readthedocs.io/en/latest/)

@@ -24,11 +24,23 @@ jobs:
         run: |
           poetry build
 
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+
   pypi-publish:
+    needs: package_build
     name: upload release to PyPI
     runs-on: ubuntu-latest
     permissions:
       id-token: write
     steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@v1.8.11

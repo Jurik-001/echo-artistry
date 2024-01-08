@@ -26,7 +26,7 @@ pip install echo-artistry
 Start by recording a voice message. Then, run EchoArtistry with your audio file:
 
 ```bash
-python echo-artistry "path_to_audio_file.wav" "output_directory" "YOUR_API_KEY"
+echo-artistry "path_to_audio_file.wav" "output_directory" "YOUR_API_KEY"
 ```
 - **path_to_audio_file.wav**: Path to your audio file.
 - **output_directory**: Directory to save generated comics.

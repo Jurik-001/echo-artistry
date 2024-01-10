@@ -14,7 +14,7 @@ class OpenAIClient:
 
     def __init__(
         self,
-        cost_manager,
+        cost_manager=None,
         model_name=helper.DEFAULT_MODEL_NAME,
         image_model_name=helper.DEFAULT_IMAGE_MODEL_NAME,
         image_size=helper.DEFAULT_IMAGE_SIZE,
@@ -28,10 +28,11 @@ class OpenAIClient:
         self.client = OpenAI()
 
     def _calculate_cost(self, messages=None, image=None, is_input=True):
-        if image:
-            self.cost_manager.calculate_cost_image(image)
-        if messages:
-            self.cost_manager.calculate_cost_messages(messages, is_input=is_input)
+        if self.cost_manager:
+            if image:
+                self.cost_manager.calculate_cost_image(image)
+            if messages:
+                self.cost_manager.calculate_cost_messages(messages, is_input=is_input)
 
     def generate_answer(self, messages):
         """Generate answer.
